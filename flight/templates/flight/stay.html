@@ -1,0 +1,101 @@
+{% extends 'flight/layout.html' %}
+
+{% load static %}
+
+{% block head %}
+    <title>Stays | Flight</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stay.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="container-new">
+    <head>
+        <title>Place Search</title>   
+    </head>
+    
+    <body>
+    <h1>Place Search</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for a place">
+        <button onclick="searchPlaces()" class="button1">Search</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+    // Replace this data with your user-stored places
+        const userStoredPlaces = [
+            { name: "Atlanta", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Atlanta", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 380026 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Atlanta", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Atlanta", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Mumbai", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Mumbai", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Mumbai", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Mumbai", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Hyderabad", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Hyderabad", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Hyderabad", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Hyderabad", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Delhi", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Delhi", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Delhi", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Delhi", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Chennai", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Chennai", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Chennai", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Chennai", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Kolkata", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Kolkata", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Kolkata", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Kolkata", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Kolkata", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Pune", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Pune", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Pune", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Pune", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Ahemdabad", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Ahemdabad", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Ahemdabad", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Ahemdabad", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "Dubai", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "Dubai", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "Dubai", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "Dubai", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+            { name: "New york", description: "The Whistling wood holidays", subplace: "Phone no. : 8975863456<br>  Email : whistwood@gmail.com <br> IN address : 41/42 S P Centre, Minoo Desai Marg, Colaba, Mumbai 400023 <br> Intl. address : Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620" },
+            { name: "New york", description: "Travel again holidays", subplace: "Phone no. : 9849863456<br> Email : trvlag@gmail.com <br> IN address : 201, Shankar Estate, Nr Revabhai Estate, Ctm, Ahmedabad 38002 <br> Intl. address : Calista Wise 7292 Dictum Av.San Antonio MI 47096" },
+            { name: "New York", description: "Reality World", subplace: "Phone no. : 9842515452<br>  Email : realwrld@gmail.com <br> IN address : 908, Bombay Mutual Bldg, Sir P M Rd, Fort, Mumbai 400019 Maharashtra <br> Intl. address : Aaron Hawkins 5587 Nunc. Avenue Erie Rhode Island 24975" },
+            { name: "New York", description: "SOTC travel", subplace: "Phone no. : 9845187551<br>  Email : sotc@gmail.com <br> IN address : 12/4, Sarai Chowk, Mathura Road, Faridabad, Delhi 121001 <br> Intl. address : Hedy Greene Ap #696-3279 Viverra. Avenue Latrobe DE 38100" },
+
+            
+            // Add more places as needed
+        ];
+
+        function searchPlaces() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = ""; // Clear previous results
+
+            const matchingPlaces = userStoredPlaces.filter(place => place.name.toLowerCase().includes(searchInput));
+
+            if (matchingPlaces.length === 0) {
+                resultsContainer.innerHTML = "No matching places found.";
+            } else {
+                matchingPlaces.forEach(place => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <h2>${place.name}</h2>
+                        <p>${place.description.replace("\n", "<br>")}</p>
+                        <p class="subplace">${place.subplace}</p>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            }
+        }
+    </script>
+    </body>
+</div>
+
+    
+{% endblock %}

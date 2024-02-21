@@ -1,0 +1,17 @@
+.container-bot{
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}

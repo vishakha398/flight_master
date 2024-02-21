@@ -1,0 +1,61 @@
+
+        /* Add your CSS styles for cards and search box here */
+        body{
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-container {
+            text-align: center;
+            border-radius: 50px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            width: 800px; /* Set the width of the card */
+            min-height: 100px; /* Set the minimum height of the card */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px; /* Rounded corners */
+        }
+        .card h2 {
+            margin: 0;
+            color:rgb(100,100,100);
+        }
+
+        .subplace {
+            margin-top: 10px;
+            font-style: sans-serif;
+        }
+        
+        .container-new{
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: auto;
+        }
+
+        .button1{
+            text-align: center;
+            background-color: #dc3545;
+            border: 1px solid #ccc;
+            color: #fcfcfc;
+        }
+
+        .description{
+            font-weight: bold;
+        }
